@@ -44,13 +44,25 @@ body {
 .help-message {
   pointer-events: none;
   user-select: none;
-  font-size: 35px;
-  color: #fff;
-  text-shadow: 1px 3px 2px #615c5c;
+  font-size: 33px;
+  color: rgb(37, 37, 37);
+  background-color: #f0eaea;
   position: absolute;
   left: 10px;
   top: 10px;
   z-index: $pin-z-index + 10;
+  padding: 10px 10px 10px 40px;
+  box-shadow: 3px 1px 7px rgba(33,33,33,.7);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 30px;
+    height: 100%;
+    background-color: #bdbdbd;
+  }
 }
 
 /**
@@ -89,17 +101,34 @@ body {
   z-index: $pin-z-index - 10;
   width: 300px;
   height: 350px;
-  background-color: #fff;
-  padding: 40px 20px 20px;
+  background-color: #ffe592;
+  padding: 20px;
   transform: rotate(-6deg); // random -6~6deg
-  box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  box-shadow: 0 5px 7px #212121b3;
   transition: 0.25s transform;
   font-size: 23px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
 
-  &--zoom-in {
+  &--focused {
     transition: 0.5s transform;
     transform: scale(1.2)!important;
     z-index: $pin-z-index - 5;
+  }
+  &--completed {
+    background-color: #e2ca7b;
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url(../img/check.png);
+      pointer-events: none;
+      z-index: 10;
+    }
   }
   &__pin {
     position: absolute;
@@ -114,18 +143,91 @@ body {
     background-position: center center;
     cursor: pointer;
   }
+  &__info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 5px;
+
+    .title {
+      font-size: 1.2em;
+    }
+  }
   &__inner {
+    flex: 1 0 0;
     width: 100%;
     height: 100%;
     outline: none;
     overflow: hidden;
   }
-  &--zoom-in > &__inner::after {
+  &--focused > &__inner::after {
     content: '할 일을 붙이시려면 Ctrl + Enter를 누르세요.';
     color: #585858;
     font-size: 18px;
     position: absolute;
     left: 20px;
     bottom: 10px;
+  }
+}
+
+
+/**
+ * Todo history
+ */
+
+.todo-history {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 20px 10px;
+
+  .history-item {
+    position: relative;
+    padding: 5px 5px 5px 30px;
+    font-size: 23px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    word-break: keep-all;
+    width: 100%;
+    min-height: 50px;
+    box-shadow: 3px 1px 7px rgba(33,33,33,.7);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 100%;
+    }
+    
+    &--insert {
+      background-color: #b5e47f;
+      &::before {
+        background-color: #94bd66;
+      }
+    }
+    &--update {
+      background-color: #7fc4e4;
+      &::before {
+        background-color: #66a4bd;
+      }
+    }
+    &--delete {
+      background-color: #e47f7f;
+      &::before {
+        background-color: #bd6666;
+      }
+    }
+  }
+  .history-item + .history-item {
+    margin-top: 15px;
   }
 }
