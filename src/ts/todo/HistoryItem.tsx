@@ -1,5 +1,6 @@
 interface HistoryItemProps {
   id: number;
+  todoId: number;
   historyType: string;
   updatedKey?: string;
   oldValue?: any;
@@ -55,7 +56,7 @@ export default function HistoryItem(props: HistoryItemProps): JSX.Element {
   return (
     <div className={`history-item history-item--${props.historyType}`}>
       <p>
-        {getCreatedAt()} :: {props.id}번째 메모가 {getActionText()}
+        {getCreatedAt()} :: {props.todoId}번째 메모가 {getActionText()}
       </p>
       {props.updatedKey && (
         <p>
